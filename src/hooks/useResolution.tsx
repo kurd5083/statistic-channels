@@ -32,7 +32,7 @@ const useResolution = (breakpoints: Breakpoints = defaultBreakpoints) => {
     isSmall: windowWidth < (breakpoints.sm || 640),
     isMedium: windowWidth < (breakpoints.md || 768),
     isLarge: windowWidth < (breakpoints.lg || 1024),
-    isXLarge: windowWidth < (breakpoints.lg || 1280),
+    isXLarge: windowWidth < (breakpoints.xl || 1280),
     width: windowWidth,
   };
 };

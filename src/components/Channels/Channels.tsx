@@ -1,22 +1,70 @@
-import search from '@/assets/search.svg';
-
-import ArrowIcon from "@/icons/ArrowIcon";
-
+import channels from '@/assets/channels.jpg';
+import excel from '@/assets/excel.svg';
+import setting from '@/assets/setting.svg';
+import rating from '@/assets/rating.svg';
 import useResolution from '@/hooks/useResolution';
 
 const Channels = () => {
-    const { isSmall } = useResolution();
+    const { isSmall, isXLarge, isMedium } = useResolution();
 
     return (
-        <section className='grid items-center grid-cols-[min_1fr_auto] lg:grid-cols-[200px_1fr_220px_170px] grid-rows-1 mt-10 sm:mt-12 px-6 lg:px-16 gap-y-6 lg:gap-2'>
-            <h2 className='col-start-1 col-span-1 row-start-1 row-start-1 text-[24px] flex items-center gap-4'>Ваши каналы <ArrowIcon width={6} height={11} color="#A3ABBC" /></h2>
-            <div className='relative col-start-1 lg:col-start-2 col-span-3 lg:col-span-1 row-start-2 lg:row-start-1 row-start-1 lg:mx-8'>
-                <input className='w-full pl-10 pb-8 border-b-1 border-[#A3ABBC] font-medium' type="text" placeholder='Поиск по букве, словосочетанию' />
-                <img className='absolute top-[calc(50%-34px)] translate-y-1/2' src={search} alt="search"/>
-            </div>
-            <button className='col-start-3 lg:col-start-3 col-span-1 row-start-1 row-start-1 bg-[#E4EBFB] text-[#488BFF] text-[14px] h-12 px-4 sm:px-6 font-semibold rounded-[16px]'>Выгрузить{!isSmall && (" все в Excel")}</button>
-            <button className='col-start-1 lg:col-start-4 col-span-1 row-start-3 lg:row-start-1 row-start-1 bg-[#488BFF] text-[#fff] text-[14px] h-12 px-6 font-semibold rounded-[16px]'>Добавить канал</button>
-        </section>
+        <ul className='!pb-8'>
+            <li className='grid gap-4 items-center 
+                grid-cols-[1fr_1fr_1fr] 
+                sm:grid-cols-[1fr_1fr_1fr_1fr_48px] 
+                md:grid-cols-[1fr_1fr_1fr_1fr_220px] 
+                xl:grid-cols-[210px_1fr_100px_minmax(0px,32px)_100px_minmax(0px,32px)_120px_minmax(0px,32px)_110px_1fr_274px_48px] 
+                grid-rows-1 mt-10 sm:mt-12 px-6 lg:px-16'
+            >
+                <div className='flex items-center gap-4 col-start-1 col-span-2 xl:col-span-1 row-start-1 row-start-1'>
+                    <img className='w-10 h-10 rounded-full' src={channels} alt="ava" />
+                    <div>
+                        <h2 className='text-[14px] font-medium'>Antropia Digital</h2>
+                        <p className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>15.750 подписчиков</p>
+                    </div>
+                </div>
+                <div className='hidden xl:block xl:col-start-2 xl:col-span-1 xl:row-start-1'></div>
+                <div className='flex flex-col items-start xl:items-center col-start-1 xl:col-start-3 col-span-1 row-start-2 xl:row-start-1'>
+                    <p className='text-[14px] font-medium'>150</p>
+                    <span className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>Подписки</span>
+                </div>
+                <div className='hidden xl:block xl:col-start-4 col-span-1 xl:row-start-1'></div>
+                <div className='flex flex-col items-start xl:items-center col-start-2 xl:col-start-5 col-span-1 row-start-2 xl:row-start-1'>
+                    <p className='text-[14px] font-medium'>- 100</p>
+                    <span className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>Отписки</span>
+                </div>
+                <div className='hidden xl:block xl:col-start-6 col-span-1 xl:row-start-1'></div>
+                <div className='flex flex-col items-start xl:items-center col-start-3 xl:col-start-7 col-span-1 row-start-2 xl:row-start-1'>
+                    <p className='text-[14px] font-medium'>1.552</p>
+                    <span className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>Чистый трафик</span>
+                </div>
+                <div className='hidden xl:block xl:col-start-8 col-span-1 xl:row-start-1'></div>
+                <div className='flex flex-col items-start xl:items-center col-start-1 sm:col-start-4 xl:col-start-9 col-span-1 row-start-3 sm:row-start-2 xl:row-start-1'>
+                    <p className='text-[14px] font-medium'>45%</p>
+                    <span className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>Конверсия</span>
+                </div>
+                <div className='hidden xl:block xl:col-start-10 col-span-1 xl:row-start-1'></div>
+                <div className='flex justify-end gap-2 col-start-3 xl:col-start-11 col-span-1 sm:col-span-3 xl:col-span-1 row-start-1 row-start-1'>
+                    <button className='flex justify-center items-center bg-[#FCFDFF] h-14 w-14 rounded-[16px] hover:-translate-y-1 transition-all duration-200'>
+                        <img src={excel} alt="excel" />
+                    </button>
+                    <button className='flex items-center gap-4 border-1 border-[#DFE2EE] text-[14px] h-14 px-6 font-semibold rounded-[16px] hover:-translate-y-1 transition-all duration-200'>
+                        <img src={rating} alt="rating" />{!isSmall && 'Показать график'}
+                    </button>
+                </div>
+                <div className='flex justify-end col-start-2 sm:col-start-5 xl:col-start-12 col-span-2 sm:col-span-1 row-start-3 sm:row-start-2 xl:row-start-1 row-start-1'>
+                    <button className='flex items-center gap-4 justify-center items-center bg-[#FCFDFF] h-12 sm:w-12 md:w-auto xl:w-12 px-6 sm:px-0 md:px-6 xl:px-0 rounded-[16px] text-[14px] font-semibold hover:-translate-y-1 transition-all duration-200'>
+                        <img src={setting} alt="setting" />
+                        {isSmall
+                            ? 'Настройки канала'
+                            : isXLarge && !isMedium
+                                ? 'Настройки канала'
+                                : null
+                        }
+                    </button>
+                </div>
+            </li>
+        </ul>
     )
 }
 
