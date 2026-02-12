@@ -1,0 +1,17 @@
+import type { IconProps } from '@/types/IconProps'
+
+const ShopIcon = ({ width, height, color }: IconProps) => {
+    return (
+        <svg 
+            width={width}
+            height={height}
+            viewBox="0 0 14 18" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M3.75 6.56818V3.65909C3.75 2.05182 5.09625 0.75 6.75 0.75C8.4075 0.75 9.75 2.05545 9.75 3.65909V6.56818M1.75 16.75H11.75C12.3023 16.75 12.75 16.3023 12.75 15.75V6.11364C12.75 5.56135 12.3023 5.11364 11.75 5.11364H1.75C1.19772 5.11364 0.75 5.56135 0.75 6.11364V15.75C0.75 16.3023 1.19772 16.75 1.75 16.75Z" stroke={color} stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+    )
+}
+
+export default ShopIcon

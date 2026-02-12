@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #F5F6FA;
+  margin: 0 auto;
+  color: #282E3B;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #4646464D;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #464646CC;
+  border-radius: 4px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+input,
+textarea {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  border: none;
+}
+
+mark {
+  background-color: transparent;
+}
+
+@media(max-width: 1279px) {
+  .swiper {
+    padding-bottom: 40px !important;
+  }
+  .swiper-slide {
+    width: auto !important;
+  }
+}
+
+.swiper-pagination-bullet {
+  background-color: transparent !important;
+  border: 1px solid #282E3B;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #488BFF !important;
+  border-color: #488BFF;
+}
