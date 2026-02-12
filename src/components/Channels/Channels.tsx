@@ -21,7 +21,7 @@ const Channels = () => {
                     <div>
                         <h2 className='text-[14px] font-medium'>Antropia Digital</h2>
                         <p className='mt-1 text-[14px] text-[#A3ABBC] font-medium'>15.750 подписчиков</p>
-                    </div>
+                    </div> 
                 </div>
                 <div className='hidden xl:block xl:col-start-2 xl:col-span-1 xl:row-start-1'></div>
                 <div className='flex flex-col items-start xl:items-center col-start-1 xl:col-start-3 col-span-1 row-start-2 xl:row-start-1'>
