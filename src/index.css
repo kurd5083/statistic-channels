@@ -23,12 +23,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p {
   margin: 0;
 }
@@ -59,10 +53,12 @@ button {
 mark {
   background-color: transparent;
 }
-
+.swiper {
+    padding: 1px 0 !important;
+  }
 @media(max-width: 1279px) {
   .swiper {
-    padding-bottom: 40px !important;
+    padding: 1px 0 40px !important;
   }
   .swiper-slide {
     width: auto !important;
@@ -77,4 +73,8 @@ mark {
 .swiper-pagination-bullet-active {
   background-color: #488BFF !important;
   border-color: #488BFF;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

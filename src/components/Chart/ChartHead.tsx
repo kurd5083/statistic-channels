@@ -11,12 +11,12 @@ const ChartHead = () => {
     return (
         <div className="flex flex-col md:flex-row gap-6 justify-between px-6 lg:px-16 mt-4 sm:mt-0 xl:mt-10">
             <div className="flex items-center gap-6">
-                <h2 className='text-[24px] flex items-center gap-4'>График <ArrowIcon width={6} height={11} color="#A3ABBC" /></h2>
-                <span className="text-[#A3ABBC] text-[14px] font-medium">Продуктовая аналитика</span>
+                <h2 className='text-[20px] sm:text-[24px] flex items-center gap-4'>График <ArrowIcon width={6} height={11} color="#A3ABBC" /></h2>
+                <span className="text-[#A3ABBC] text-[12px] sm:text-[14px] font-medium">Продуктовая аналитика</span>
             </div>
             <div className="flex flex-wrap items-center gap-2">
                 <CustomSelect
-                    placeholder="Выберите метрику"
+                    placeholder="Метрика"
                     options={[
                         { id: "subscriptions", label: "Подписки" },
                         { id: "unsubscriptions", label: "Отписки" },
@@ -28,9 +28,9 @@ const ChartHead = () => {
                     view="transporent"
                 />
                 <CustomSelect
-                    placeholder="Выберите период"
+                    placeholder="Период"
                     options={[
-                        { id: "day", label: "За день" },
+                        { id: "day", label: "24 часа" },
                         { id: "week", label: "За неделю" },
                         { id: "month", label: "За месяц" },
                         { id: "year", label: "За год" },

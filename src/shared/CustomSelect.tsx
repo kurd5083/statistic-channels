@@ -40,9 +40,9 @@ const CustomSelect = ({ placeholder, options, value, onChange, view }: CustomSel
   }, []);
 
   return (
-    <div ref={ref} className="relative ">
+    <div ref={ref} className="flex justify-end relative">
       <div
-        className={`flex items-center gap-4 cursor-pointer 
+        className={`w-min flex items-center gap-4 cursor-pointer 
           ${view && 'h-14 px-4 sm:px-6 rounded-[16px] hover:bg-[#EFF3FF] transition-colors duration-200 group'} 
           ${view == "transporent" && 'border-1 border-[#DFE2EE]'} 
           ${view == "filling" && 'bg-[#FCFDFF]'} 
@@ -53,7 +53,7 @@ const CustomSelect = ({ placeholder, options, value, onChange, view }: CustomSel
         }}
       >
         <p
-          className={`truncate font-medium text-[#A3ABBC] text-[14px] 
+          className={`truncate font-medium text-[#A3ABBC] text-[12px] sm:text-[14px] 
             ${view && '!text-[#282E3B] font-semibold'} 
             ${isOpen && '!text-[#488BFF]'} 
           `}>
@@ -68,7 +68,7 @@ const CustomSelect = ({ placeholder, options, value, onChange, view }: CustomSel
       </div>
 
       {isOpen && (
-        <div className="absolute right-0 rounded-[12px] mt-2 max-h-[240px] w-full overflow-y-auto p-2 bg-[#FCFDFF] z-20 shadow-md">
+        <div className={`absolute right-0 ${view ? 'top-14' : 'top-5'} rounded-[12px] mt-2 max-h-[240px] w-full overflow-y-auto p-2 bg-[#FCFDFF] z-20 shadow-md`}>
           <div className="flex flex-col gap-1">
             {options?.map((option) => (
               <div

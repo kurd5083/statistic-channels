@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import logo from "@/assets/logo.svg"
 import flag from "@/assets/flag.svg"
 import ava from "@/assets/ava.jpg"
+import LogoIcon from "@/icons/LogoIcon"
 
 import CustomSelect from "@/shared/CustomSelect"
 
@@ -13,9 +13,9 @@ const Header = () => {
   const { isSmall } = useResolution();
 
   return (
-    <header className="flex items-center justify-between pt-8 lg:pt-11 px-6 lg:px-16 gap-6">
+    <header className="flex items-center justify-between pt-5 sm:pt-8 lg:pt-11 px-6 lg:px-16 gap-6">
       <div className="w-full sm:w-auto flex items-center justify-between gap-4">
-        <img src={logo} alt="logo" />
+        <LogoIcon width={14} height={16} colorFirst="#488BFF" colorSecond="#7BACFF"/>
         <div className="flex-grow-1 flex flex-col gap-1">
           <span className="text-[8px]    uppercase font-light">Статистика</span>
           <p className="text-[18px] leading-[18px]">Каналов</p>
@@ -38,7 +38,7 @@ const Header = () => {
             onChange={(id) => setSelectValue(String(id))}
           />
         )}
-        <img className="flex-shrink-0 w-10 h-10 rounded-full border-4 border-[#FCFDFF]" src={ava} alt="ava" />
+        <img className="flex-shrink-0 w-10 h-10 rounded-full border-4 border-[#FCFDFF] shadow-lg" src={ava} alt="ava" />
       </div>
     </header>
   )

@@ -1,0 +1,19 @@
+import type { IconProps } from '@/types/IconProps'
+
+const LogoIcon = ({ width, height, colorFirst, colorSecond }: IconProps) => {
+    return (
+        <svg 
+            width={width}
+            height={height}
+            viewBox="0 0 15 17" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <rect x="3.56055" y="8.72696" width="7.87927" height="7.87927" rx="3.93964" transform="rotate(1 3.56055 8.72696)" fill={colorFirst} />
+            <rect x="0.137451" width="14.7263" height="7.87927" rx="3.93964" transform="rotate(1 0.137451 0)" fill={colorSecond} />
+        </svg>
+
+    )
+}
+
+export default LogoIcon
