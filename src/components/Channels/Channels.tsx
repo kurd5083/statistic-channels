@@ -10,24 +10,42 @@ const channelData = [
     {
         icon: channels,
         name: 'Antropia Digital',
-        subscribers: '15.750 подписчиков',
-        stats: [
-            { value: '150', label: 'Подписки' },
-            { value: '-100', label: 'Отписки' },
-            { value: '1.552', label: 'Чистый трафик' },
-            { value: '45%', label: 'Конверсия' },
-        ],
+        subscribers: '15.750',
+        online: true,
+        subscriptions: '150',
+        unsubscribes: '-100',
+        traffic: '1.552',
+        conversion: '45',
     },
     {
         icon: channels,
-        name: 'Antropia Digital',
-        subscribers: '15.750 подписчиков',
-        stats: [
-            { value: '150', label: 'Подписки' },
-            { value: '-100', label: 'Отписки' },
-            { value: '1.552', label: 'Чистый трафик' },
-            { value: '45%', label: 'Конверсия' },
-        ],
+        name: 'Creative Minds',
+        subscribers: '22.410',
+        online: false,
+        subscriptions: '210',
+        unsubscribes: '-50',
+        traffic: '1.750',
+        conversion: '60%',
+    },
+    {
+        icon: channels,
+        name: 'EduStream',
+        subscribers: '5.600',
+        online: true,
+        subscriptions: '75',
+        unsubscribes: '-10',
+        traffic: '650',
+        conversion: '25%',
+    },
+    {
+        icon: channels,
+        name: 'Gaming Hub',
+        subscribers: '18.900',
+        online: false,
+        subscriptions: '180',
+        unsubscribes: '-70',
+        traffic: '2.200',
+        conversion: '50%',
     },
 ];
 
@@ -45,30 +63,33 @@ const Channels = () => {
                     grid-rows-1 mx-6 lg:mx-16 pb-8  last:pb-0'
                 >
                     <div className='flex items-center gap-4 col-start-1 col-span-2 xl:col-span-1 row-start-1 row-start-1'>
+                        {channel.online && (
+                            <span className='w-1.5 h-1.5 bg-[#488BFF] rounded-full'/>
+                        )}
                         <img className='w-10 h-10 rounded-full' src={channels} alt="ava" />
                         <div>
-                            <h2 className='text-[12px] sm:text-[14px] font-medium'>Antropia Digital</h2>
-                            <p className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>15.750 подписчиков</p>
+                            <h2 className='text-[12px] sm:text-[14px] font-medium'>{channel.name}</h2>
+                            <p className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>{channel.subscribers} подписчиков</p>
                         </div>
                     </div>
                     <div className='hidden xl:block xl:col-start-2 xl:col-span-1 xl:row-start-1'></div>
                     <div className='flex flex-col items-start xl:items-center col-start-1 xl:col-start-3 col-span-1 row-start-2 xl:row-start-1'>
-                        <p className='text-[12px] sm:text-[14px] font-medium'>150</p>
+                        <p className='text-[12px] sm:text-[14px] font-medium'>{channel.subscriptions}</p>
                         <span className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>Подписки</span>
                     </div>
                     <div className='hidden xl:block xl:col-start-4 col-span-1 xl:row-start-1'></div>
                     <div className='flex flex-col items-start xl:items-center col-start-2 xl:col-start-5 col-span-1 row-start-2 xl:row-start-1'>
-                        <p className='text-[12px] sm:text-[14px] font-medium'>- 100</p>
+                        <p className='text-[12px] sm:text-[14px] font-medium'>{channel.unsubscribes}</p>
                         <span className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>Отписки</span>
                     </div>
                     <div className='hidden xl:block xl:col-start-6 col-span-1 xl:row-start-1'></div>
                     <div className='flex flex-col items-start xl:items-center col-start-3 xl:col-start-7 col-span-1 row-start-2 xl:row-start-1'>
-                        <p className='text-[12px] sm:text-[14px] font-medium'>1.552</p>
+                        <p className='text-[12px] sm:text-[14px] font-medium'>{channel.traffic}</p>
                         <span className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>Чистый трафик</span>
                     </div>
                     <div className='hidden xl:block xl:col-start-8 col-span-1 xl:row-start-1'></div>
                     <div className='flex flex-col items-start xl:items-center col-start-1 sm:col-start-4 xl:col-start-9 col-span-1 row-start-3 sm:row-start-2 xl:row-start-1'>
-                        <p className='text-[12px] sm:text-[14px] font-medium'>45%</p>
+                        <p className='text-[12px] sm:text-[14px] font-medium'>{channel.conversion}%</p>
                         <span className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>Конверсия</span>
                     </div>
                     <div className='hidden xl:block xl:col-start-10 col-span-1 xl:row-start-1'></div>

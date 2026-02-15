@@ -32,7 +32,7 @@ export const metricsData = [
     id: "1",
     title: "Подписки",
     subtitle: "24H",
-    value: 1.510,
+    value: "1.510",
     sign: '+',
     extra: "Человека",
     icon: UsersIcon,
@@ -41,7 +41,7 @@ export const metricsData = [
     id: "2",
     title: "Отписки",
     subtitle: "24H",
-    value: 352,
+    value: "352",
     sign: '-',
     extra: "человека",
     icon: ShopIcon,
@@ -50,7 +50,7 @@ export const metricsData = [
     id: "3",
     title: "Чистый трафик",
     subtitle: "ВСЕГО",
-    value: 32,
+    value: "32",
     extra: "В работ",
     icon: RocketIcon,
   },
@@ -106,7 +106,7 @@ const Metrics = () => {
                       <ArrowIcon width={4} height={8} color="#F5F6FA" />
                     </div> : item.sign}
                 </span>
-                <p className="text-[48px] leading-[48px] group-hover:text-[#fff]">
+                <p className="text-[48px] leading-[48px] font-light group-hover:text-[#fff]">
                   {item.value}
                 </p>
                 {item.extra && (

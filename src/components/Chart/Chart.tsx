@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type HoverChart = {
     x: number,
@@ -8,35 +8,53 @@ type HoverChart = {
     label: string
 }
 
-const points = [0, 50, 43, 20, 27, 24, 1, 11, 26, 8, 54, 40, 63, 23, 44, 20, 54, 25, 66, 33, 77, 12, 3, 22]
+const points = [0, 50, 43, 20, 27, 24, 1, 11, 26, 8, 54, 40, 63, 23, 12, 20, 54, 25, 66, 33, 77, 12, 3, 22]
 
 const dataX = ['1 час', '2 час', '3 час', '4 час', '5 час', '6 час', '7 час', '8 час', '9 час', '10 час', '11 час', '12 час', '13 час', '14 час', '15 час', '16 час', '17 час', '18 час', '19 час', '20 час', '21 час', '22 час', '23 час', '24 час']
 
 const Chart = () => {
-    const [hoverPos, setHoverPos] = useState<{ x: number, y: number } | null>(null);
     const [hoverChart, setHoverChart] = useState<HoverChart | null>(null)
+    const [chartWidth, setChartWidth] = useState(0);
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const observer = new ResizeObserver(entries => {
+            const entry = entries[0];
+            setChartWidth(entry.contentRect.width);
+        });
+
+        observer.observe(containerRef.current);
+
+        return () => observer.disconnect();
+    }, []);
 
     const containerRef = useRef<HTMLDivElement>(null)
     const isDragging = useRef(false)
     const startX = useRef(0)
     const scrollStart = useRef(0)
 
-    const padding = 10;
+    const padding = 18;
     const maxY = Math.max(...points);
     const minY = Math.min(...points);
 
+    
     const step = (maxY - minY) / 6;
 
     const dataY = Array.from({ length: 7 }, (_, i) =>
         Math.round(minY + i * step)
     ).reverse()
-
-    const width = 1200;
+const maxYLength = Math.max(...dataY).toString().length;
+const yColumnWidth = maxYLength * 8 + 16;
+    const chartTopPadding = 5;
+    const width = Math.max(chartWidth, 2400);
     const height = 400;
     const chartHeight = 350;
 
     const chartPoints = points.map((item, i) => {
-        const x = (i * width) / (points.length - 1);
+        const x =
+    padding +
+    (i * (width - padding * 2)) / (dataX.length - 1);
         const y = chartHeight - (item / maxY) * chartHeight;
 
         return { x, y };
@@ -60,15 +78,17 @@ const Chart = () => {
         return d;
     };
 
-    const handleMouseMoveChart = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    const handleMouseMoveChart = (e: React.MouseEvent<SVGSVGElement>) => {
         const svg = e.currentTarget;
         const rect = svg.getBoundingClientRect();
+
         const mouseX = e.clientX - rect.left;
         const scaleX = width / rect.width;
         const scaledMouseX = mouseX * scaleX;
 
         let closestIndex = 0;
         let minDist = Math.abs(scaledMouseX - chartPoints[0].x);
+
         chartPoints.forEach((p, i) => {
             const dist = Math.abs(scaledMouseX - p.x);
             if (dist < minDist) {
@@ -79,21 +99,17 @@ const Chart = () => {
 
         const closest = chartPoints[closestIndex];
 
-        setHoverChart({ ...closest, value: points[closestIndex], date: '1 мая 2025', label: 'За день' });
-
-        // Корректируем позицию с учётом скролла
-        const container = containerRef.current;
-        const scrollOffset = container ? container.scrollLeft : 0;
-
-        setHoverPos({
-            x: closest.x * (rect.width / width) - scrollOffset * (rect.width / width),
-            y: closest.y
+        setHoverChart({
+            x: closest.x,
+            y: closest.y,
+            value: points[closestIndex],
+            date: '1 мая 2025',
+            label: 'За день',
         });
     };
 
     const handleMouseLeaveChart = () => setHoverChart(null);
 
-    // Drag & Drop scroll
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (!containerRef.current) return;
         isDragging.current = true;
@@ -113,24 +129,29 @@ const Chart = () => {
 
     return (
         <div
-            className='relative grid grid-cols-[30px_1fr] grid-rows-[350px_50px] mt-9 pl-6 sm:px-6 lg:px-16'
+            className='relative grid grid-rows-[350px_50px] mt-9 pl-6 sm:px-6 lg:px-16'
+            style={{ gridTemplateColumns: `${yColumnWidth}px 1fr` }}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
         >
             <div className='relative col-start-1 row-start-1'>
-                {dataY.map(value => {
-                    const y = padding + ((maxY - value) * (chartHeight - padding * 2)) / maxY;
+                <div className='relative col-start-1 row-start-1'>
+                    {dataY.map(value => {
 
-                    return (
-                        <p
-                            key={value}
-                            className="absolute left-0 -translate-y-1/2 text-[#A3ABBC]"
-                            style={{ top: y }}
-                        >
-                            {value}
-                        </p>
-                    )
-                })}
+                        const y =
+                            chartTopPadding + padding + ((maxY - value) * (chartHeight - padding * 2)) / maxY;
+
+                        return (
+                            <p
+                                key={value}
+                                className="absolute left-0 -translate-y-1/2 text-[#A3ABBC]"
+                                style={{ top: y }}
+                            >
+                                {value}
+                            </p>
+                        );
+                    })}
+                </div>
             </div>
             <div
                 ref={containerRef}
@@ -141,7 +162,7 @@ const Chart = () => {
                 <svg
                     width="100%"
                     height={height}
-                    viewBox={`0 0 ${width} ${height}`}
+                    viewBox={`0 -${chartTopPadding} ${width} ${height + chartTopPadding}`}
                     preserveAspectRatio="none"
                     className="min-w-600"
                     onMouseMove={handleMouseMoveChart}
@@ -169,9 +190,73 @@ const Chart = () => {
 
                     <rect width={width} height={chartHeight} fill="url(#dots)" />
                     <path d={createBezierPath(chartPoints)} fill="none" stroke="url(#line)" strokeWidth={2} />
-                    {hoverChart && (
-                        <circle cx={hoverChart.x} cy={hoverChart.y} r={4} fill="#FCFDFF" stroke="#72A5FD" strokeWidth="1.5" />
-                    )}
+                    {hoverChart && (() => {
+                        const CIRCLE_RADIUS = 4;
+                        const circleX = Math.max(CIRCLE_RADIUS, Math.min(hoverChart.x, width - CIRCLE_RADIUS));
+                        const circleY = hoverChart.y;
+
+                        const TOOLTIP_HEIGHT = 70;
+                        const paddingHorizontal = 16;
+                        const valueText = `${hoverChart.value}`;
+                        const labelText = hoverChart.label;
+
+                        const approxCharWidth = 8;
+                        const textWidth = Math.max(valueText.length * approxCharWidth, labelText.length * approxCharWidth);
+                        const TOOLTIP_WIDTH = textWidth + paddingHorizontal + 80;
+
+                        const isLeftEdge = circleX - TOOLTIP_WIDTH / 2 < 0;
+                        const isRightEdge = circleX + TOOLTIP_WIDTH / 2 > width;
+                        const isTopEdge = circleY - TOOLTIP_HEIGHT - 10 < 0;
+
+                        const tooltipX = isLeftEdge ? 0 : isRightEdge ? -TOOLTIP_WIDTH : -TOOLTIP_WIDTH / 2;
+                        const tooltipY = isTopEdge ? 10 : -TOOLTIP_HEIGHT - 10;
+
+                        return (
+                            <>
+                                <circle
+                                    cx={circleX}
+                                    cy={circleY}
+                                    r={CIRCLE_RADIUS}
+                                    fill="#FCFDFF"
+                                    stroke="#72A5FD"
+                                    strokeWidth="1.5"
+                                />
+
+                                <g transform={`translate(${circleX}, ${circleY})`}>
+                                    <line
+                                        y1={0}
+                                        y2={chartHeight - circleY}
+                                        stroke="#E5E9F5"
+                                        strokeDasharray="4 4"
+                                    />
+
+                                    <rect
+                                        x={tooltipX}
+                                        y={tooltipY}
+                                        width={TOOLTIP_WIDTH}
+                                        height={TOOLTIP_HEIGHT}
+                                        rx={12}
+                                        fill="#FCFDFF"
+                                        stroke="#E5E9F5"
+                                    />
+
+                                    <text x={tooltipX + 10} y={tooltipY + 22} fontSize={12} fill="#A3ABBC">
+                                        {hoverChart.date}
+                                    </text>
+
+                                    <text x={tooltipX + 10} y={tooltipY + 56} fontSize={24} fill="#282E3B">
+                                         <tspan dx={6} fontSize={16} fill="#282E3B">
+                                            ${' '}
+                                        </tspan>
+                                        {valueText}
+                                        <tspan dx={6} fontSize={10} fill="#A3ABBC">
+                                            {labelText}
+                                        </tspan>
+                                    </text>
+                                </g>
+                            </>
+                        );
+                    })()}
                     {dataX.map((label, i) => {
                         const x =
                             padding +
@@ -183,12 +268,9 @@ const Chart = () => {
                                 x={x}
                                 y={chartHeight + 40}
                                 textAnchor="middle"
-                                fontSize="8"
+                                fontSize="12"
                                 fill="#A3ABBC"
-                                letterSpacing="0px"
-                                wordSpacing="-1px"
-                                fontFamily="Montserrat, sans-serif"
-                                
+
                             >
                                 {label}
                             </text>
@@ -196,25 +278,6 @@ const Chart = () => {
                     })}
                 </svg>
             </div>
-            {hoverChart && hoverPos && (
-                <div
-                    className="absolute bg-[#FCFDFF] rounded-[16px] p-4 pointer-events-none"
-                    style={{
-                        left: hoverPos.x,
-                        top: hoverPos.y,
-                        transform: 'translate(50%, -120%)',
-                        whiteSpace: 'nowrap',
-                        zIndex: 10,
-                    }}
-                >
-                    <div className="text-[12px] text-[#A3ABBC]">{hoverChart.date}</div>
-                    <p className="text-[24px]">
-                        <span className="text-[16px]">$</span>{' '}
-                        {hoverChart.value}{' '}
-                        <span className="text-[12px] text-[#A3ABBC]">{hoverChart.label}</span>
-                    </p>
-                </div>
-            )}
         </div>
     )
 }

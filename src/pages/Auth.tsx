@@ -18,7 +18,7 @@ const Auth = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-[#F5F6FA]">
+    <section className="min-h-screen flex items-center justify-center bg-[#F5F6FA] mx-5">
       <div className="w-full max-w-md p-8 bg-[#FCFDFF] rounded-[16px] shadow-lg">
         <h1 className="text-3xl font-semibold mb-4 text-center">Вход в аккаунт</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
