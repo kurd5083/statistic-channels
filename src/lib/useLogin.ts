@@ -1,9 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { login } from "@/api/login";
 
 export const useLogin = (onSuccessCallback?: () => void) => {
-    const queryClient = useQueryClient();
-
     return useMutation({
         mutationFn: ({ username, password }: { username: string, password: string }) => login({ username, password }),
         onSuccess: (res) => {
