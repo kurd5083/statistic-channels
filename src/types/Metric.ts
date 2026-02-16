@@ -1,0 +1,1 @@
+export type MetricType = 'subscriptions' | 'unsubscriptions' | 'netTraffic' | 'conversion';

@@ -8,7 +8,7 @@ type Option = {
 }
 
 type CustomSelectProps = {
-  placeholder: string,
+  placeholder?: string,
   options: Option[],
   value: string,
   onChange: (id: number | string) => void,

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import search from '@/assets/search.svg';
 import ArrowIcon from "@/icons/ArrowIcon";
 
@@ -7,9 +5,12 @@ import CustomSelect from "@/shared/CustomSelect"
 
 import useResolution from '@/hooks/useResolution';
 
-const ChannelsHead = () => {
-    const [selectValue, setSelectValue] = useState<string>('')
+import { useFilterСhannels } from '@/store/filterСhannels';
+import { useResourcesUser } from '@/store/resourcesUser';
 
+const ChannelsHead = () => {
+    const { filter, setFilter } = useFilterСhannels();
+    const { query, searchResources } = useResourcesUser();
     const { isSmall } = useResolution();
 
     return (
@@ -22,20 +23,20 @@ const ChannelsHead = () => {
                     '
                     type="text"
                     placeholder='Поиск по букве, словосочетанию'
+                    value={query}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => searchResources(e.target.value)}
                 />
                 <img className='absolute top-[calc(50%-26px)] translate-y-1/2' src={search} alt="search" />
             </div>
             <div className='col-start-3 lg:col-start-3 col-span-1 row-start-3 lg:row-start-1 row-start-1'>
                 <CustomSelect
-                    placeholder="Период"
                     options={[
                         { id: "day", label: "24 часа" },
                         { id: "week", label: "За неделю" },
                         { id: "month", label: "За месяц" },
-                        { id: "year", label: "За год" },
                     ]}
-                    value={selectValue}
-                    onChange={(id) => setSelectValue(String(id))}
+                    value={filter}
+                    onChange={(id) => setFilter(String(id))}
                     view="filling"
                 />
             </div>

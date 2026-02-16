@@ -53,7 +53,10 @@ mark {
   background-color: transparent;
 }
 .swiper {
-    padding: 1px 0 !important;
+  padding: 1px 0 !important;
+}
+.swiper-slide {
+    cursor: grab;
   }
 @media(max-width: 1279px) {
   .swiper {
