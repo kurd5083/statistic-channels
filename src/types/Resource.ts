@@ -7,4 +7,5 @@ export type Resource = {
     netTraffic: number,
     conversion: number,
     sub_count: number,
+    avatar: string
 }

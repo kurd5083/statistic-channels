@@ -27,6 +27,7 @@ export const useResourcesUser = create((set, get): ResourcesUser => ({
                 netTraffic: r.netTraffic,
                 conversion: r.conversion,
                 sub_count: r.sub_count,
+                avatar: r.avatar,
             };
         })
         set({ resources: formatted, filteredResources: formatted });

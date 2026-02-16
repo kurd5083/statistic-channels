@@ -84,7 +84,7 @@ const Channels = () => {
     }, [filter, resourcesUser, initResources, dateFrom, today]);
 
     const isLoading = loadingResourcesUser || loadingStats;
-    console.log(loadingResourcesUser, loadingStats)
+    console.log(filteredResources)
     return (
         <ul className='flex flex-col gap-8 !pb-8 !mt-10 sm:!mt-12 max-h-[400px] overflow-y-auto scrollbar-none'>
             {(isLoading ? (
@@ -107,7 +107,7 @@ const Channels = () => {
                                 {/* {channel.online && (
                                     <span className='w-1.5 h-1.5 bg-[#488BFF] rounded-full'/>
                                 )} */}
-                                <img className='w-10 h-10 rounded-full' src={channels} alt="ava" />
+                                <img className='w-10 h-10 rounded-full' src={`https://channelstats.aiposting.live${r.avatar}`} alt="ava" />
                                 <div>
                                     <h2 className='text-[12px] sm:text-[14px] font-medium'>{r.name}</h2>
                                     <p className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>{formatText(r.sub_count)} подписчиков</p>
