@@ -340,17 +340,9 @@ const Chart = () => {
                             <circle cx={10} cy={5} r={1.25} fill="none" stroke="#DEE4F9" strokeWidth="0.75" />
                         </pattern>
                     </defs>
-                    <defs>
-                        <linearGradient id="line" x1="0%" y1="100%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor='#F5F6FA00' />
-                            <stop offset="5%" stopColor='#71A5FF' />
-                            <stop offset="95%" stopColor='#71A5FF' />
-                            <stop offset="100%" stopColor='#F5F6FA00' />
-                        </linearGradient>
-                    </defs>
 
                     <rect width={width} height={chartHeight} fill="url(#dots)" />
-                    <path d={createBezierPath(chartPoints)} fill="none" stroke="url(#line)" strokeWidth={2} />
+                    <path d={createBezierPath(chartPoints)} fill="none" stroke="#71A5FF" strokeWidth={2} />
                     {hoverChart && (() => {
                         const CIRCLE_RADIUS = 4;
                         const circleX = Math.max(CIRCLE_RADIUS, Math.min(hoverChart.x, width - CIRCLE_RADIUS));

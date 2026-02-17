@@ -26,7 +26,6 @@ export const useStatsChannels = create((set): StatsChannels => ({
         set({ loading: true });
 
         const from24h = getDateFromFilter("day");
-        const fromMonth = getDateFromFilter("month");
         const today = getToday();
 
         let subscribers24hSum = 0;
@@ -45,15 +44,7 @@ export const useStatsChannels = create((set): StatsChannels => ({
 
                 subscribers24hSum += summary24h.totalJoins;
                 unsubscribes24hSum += summary24h.totalLeaves;
-
-                const statsYear = await getPeriodStats({
-                    resourceId: resource.id,
-                    dateFrom: fromMonth,
-                    dateTo: today,
-                    includeDetails: false
-                });
-                
-                cleanTrafficSum += statsYear.data.stats.summary.currentActive;
+                cleanTrafficSum += summary24h.currentActive;
             })
         );
         
