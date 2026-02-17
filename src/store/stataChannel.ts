@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { getLast24hRange, getMonthRange } from "@/lib/dateUtils";
+import { getDateFromFilter, getToday } from '@/lib/dateUtils';
 
 import { type Resource } from '@/types/Resource';
 
@@ -25,8 +25,9 @@ export const useStatsChannels = create((set): StatsChannels => ({
     changeStats: async (resources) => {
         set({ loading: true });
 
-        const { dateFrom: from24h, dateTo: to24h } = getLast24hRange();
-        const { dateFrom: fromMonth, dateTo: toMonth } = getMonthRange();
+        const from24h = getDateFromFilter("day");
+        const fromMonth = getDateFromFilter("month");
+        const today = getToday();
 
         let subscribers24hSum = 0;
         let unsubscribes24hSum = 0;
@@ -37,7 +38,7 @@ export const useStatsChannels = create((set): StatsChannels => ({
                 const stats24h = await getPeriodStats({
                     resourceId: resource.id,
                     dateFrom: from24h,
-                    dateTo: to24h,
+                    dateTo: today,
                     includeDetails: false
                 });
                 const summary24h = stats24h.data.stats.summary;
@@ -48,7 +49,7 @@ export const useStatsChannels = create((set): StatsChannels => ({
                 const statsYear = await getPeriodStats({
                     resourceId: resource.id,
                     dateFrom: fromMonth,
-                    dateTo: toMonth,
+                    dateTo: today,
                     includeDetails: false
                 });
                 

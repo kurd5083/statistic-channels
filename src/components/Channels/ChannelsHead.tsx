@@ -5,12 +5,14 @@ import CustomSelect from "@/shared/CustomSelect"
 
 import useResolution from '@/hooks/useResolution';
 
+import { exportResourcesToExcel } from '@/lib/ExportExcel';
+
 import { useFilterСhannels } from '@/store/filterСhannels';
 import { useResourcesUser } from '@/store/resourcesUser';
 
 const ChannelsHead = () => {
     const { filter, setFilter } = useFilterСhannels();
-    const { query, searchResources } = useResourcesUser();
+    const { filteredResources, query, searchResources } = useResourcesUser();
     const { isSmall } = useResolution();
 
     return (
@@ -40,7 +42,10 @@ const ChannelsHead = () => {
                     view="filling"
                 />
             </div>
-            <button className='col-start-3 lg:col-start-4 col-span-1 row-start-1 row-start-1 bg-[#E4EBFB] text-[#488BFF] text-[14px] h-12 px-4 sm:px-6 font-semibold rounded-[16px] hover:-translate-y-1 transition-all duration-200'>Выгрузить{!isSmall && (" все в Excel")}</button>
+            <button 
+                onClick={() => exportResourcesToExcel(filteredResources)}
+                className='col-start-3 lg:col-start-4 col-span-1 row-start-1 row-start-1 bg-[#E4EBFB] text-[#488BFF] text-[14px] h-12 px-4 sm:px-6 font-semibold rounded-[16px] hover:-translate-y-1 transition-all duration-200'
+            >Выгрузить{!isSmall && (" все в Excel")}</button>
             <button className='col-start-1 lg:col-start-5 col-span-1 row-start-3 lg:row-start-1 bg-[#488BFF] text-[#fff] text-[14px] h-12 px-6 font-semibold rounded-[16px] hover:-translate-y-1 transition-all duration-200'>Добавить канал</button>
         </section>
     )

@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 
-import channels from '@/assets/channels.jpg';
 import excel from '@/assets/excel.svg';
 import rating from '@/assets/rating.svg';
 
@@ -11,6 +10,7 @@ import useResolution from '@/hooks/useResolution';
 import { useGetResourcesUser } from '@/lib/useGetResourcesUser';
 import { getDateFromFilter, getToday } from '@/lib/dateUtils';
 import { formatText } from '@/lib/formatText';
+import { exportResourcesToExcel } from '@/lib/ExportExcel';
 
 import { useResourcesUser } from '@/store/resourcesUser';
 import { useFilterСhannels } from '@/store/filterСhannels';
@@ -19,6 +19,7 @@ import { useSelectedChannelStore } from '@/store/selectedChannel';
 import { getPeriodStats } from '@/api/getPeriodStats';
 
 import { type Resource } from '@/types/Resource';
+
 
 const Channels = () => {
     const [loadingStats, setLoadingStats] = useState(false); 
@@ -33,7 +34,6 @@ const Channels = () => {
     const today = getToday();
     
     const { resourcesUser, loadingResourcesUser } = useGetResourcesUser({ userTelegramId: 7050683340 });
-
     useEffect(() => {
         const fetchAllStats = async () => {
             setLoadingStats(true);
@@ -52,7 +52,7 @@ const Channels = () => {
                             dateTo: today,
                             includeDetails: false
                         });
-
+                        
                         const summary = periodStats.data.stats.summary;
 
                         const joins = summary.totalJoins || 0;
@@ -84,7 +84,7 @@ const Channels = () => {
     }, [filter, resourcesUser, initResources, dateFrom, today]);
 
     const isLoading = loadingResourcesUser || loadingStats;
-    console.log(filteredResources)
+
     return (
         <ul className='flex flex-col gap-8 !pb-8 !mt-10 sm:!mt-12 max-h-[400px] overflow-y-auto scrollbar-none'>
             {(isLoading ? (
@@ -120,7 +120,7 @@ const Channels = () => {
                             </div>
                             <div className='hidden xl:block xl:col-start-4 col-span-1 xl:row-start-1'></div>
                             <div className='flex flex-col items-start xl:items-center col-start-2 xl:col-start-5 col-span-1 row-start-2 xl:row-start-1'>
-                                <p className='text-[12px] sm:text-[14px] font-medium'>{r.unsubscribes}</p>
+                                <p className='text-[12px] sm:text-[14px] font-medium'>-{r.unsubscribes}</p>
                                 <span className='mt-1 text-[12px] sm:text-[14px] text-[#A3ABBC] font-medium'>Отписки</span>
                             </div>
                             <div className='hidden xl:block xl:col-start-6 col-span-1 xl:row-start-1'></div>
@@ -135,7 +135,10 @@ const Channels = () => {
                             </div>
                             <div className='hidden xl:block xl:col-start-10 col-span-1 xl:row-start-1'></div>
                             <div className='flex justify-end gap-2 col-start-3 xl:col-start-11 col-span-1 sm:col-span-3 xl:col-span-1 row-start-1 row-start-1'>
-                                <button className='flex justify-center items-center bg-[#FCFDFF] h-12 sm:h-14 w-12 sm:w-14 rounded-[16px] hover:-translate-y-1 transition-all duration-200'>
+                                <button 
+                                    onClick={() => exportResourcesToExcel([r])}
+                                    className='flex justify-center items-center bg-[#FCFDFF] h-12 sm:h-14 w-12 sm:w-14 rounded-[16px] hover:-translate-y-1 transition-all duration-200'
+                                >
                                     <img src={excel} alt="excel" />
                                 </button>
                                 <button 

@@ -75,74 +75,73 @@ const Chart = () => {
             try {
                 const includeDetails = period === 'day';
 
-            const res = await getPeriodStats({
-                resourceId: selectChannel.id,
-                dateFrom,
-                dateTo: today,
-                includeDetails
-            });
-
-            let formatted;
-
-            if (includeDetails) {
-                const dailyStatsDetails = res?.data?.stats?.dailyStats ?? [];
-
-                const hourlyStats: Record<number, { joins: number, leaves: number }> = {};
-
-                dailyStatsDetails.forEach((dayStat: any) => {
-                    // Обрабатываем joins
-                    dayStat.details.joins.forEach((join: any) => {
-                        const date = new Date(join.createdAt);
-                        const hour = date.getHours();
-                        if (!hourlyStats[hour]) hourlyStats[hour] = { joins: 0, leaves: 0 };
-                        hourlyStats[hour].joins += 1;
-                    });
-
-                    dayStat.details.leaves.forEach((leave: any) => {
-                        const date = new Date(leave.createdAt);
-                        const hour = date.getHours();
-                        if (!hourlyStats[hour]) hourlyStats[hour] = { joins: 0, leaves: 0 };
-                        hourlyStats[hour].leaves += 1;
-                    });
+                const res = await getPeriodStats({
+                    resourceId: selectChannel.id,
+                    dateFrom,
+                    dateTo: today,
+                    includeDetails
                 });
 
-                formatted = Array.from({ length: 24 }, (_, i) => {
-                    const joins = hourlyStats[i]?.joins ?? 0;
-                    const leaves = hourlyStats[i]?.leaves ?? 0;
+                let formatted;
 
-                    let value = 0;
+                if (includeDetails) {
+                    const dailyStatsDetails = res?.data?.stats?.dailyStats ?? [];
 
-                    switch (metric) {
-                        case 'subscriptions':
-                            value = joins;
-                            break;
-                        case 'unsubscriptions':
-                            value = leaves;
-                            break;
-                        case 'netTraffic':
-                            value = joins - leaves;
-                            break;
-                        case 'conversion':
-                            value = joins + leaves > 0 ? Math.round((joins / (joins + leaves)) * 100) : 0;
-                            break;
-                    }
+                    const hourlyStats: Record<number, { joins: number, leaves: number }> = {};
 
-                    return {
-                        date: `${i} час`,
-                        value,
-                    };
-                });
+                    dailyStatsDetails.forEach((dayStat: any) => {
+                        dayStat.details.joins.forEach((join: any) => {
+                            const date = new Date(join.createdAt);
+                            const hour = date.getHours();
+                            if (!hourlyStats[hour]) hourlyStats[hour] = { joins: 0, leaves: 0 };
+                            hourlyStats[hour].joins += 1;
+                        });
 
-            } else {
-                const stats = res?.data?.stats?.dailyStats ?? [];
+                        dayStat.details.leaves.forEach((leave: any) => {
+                            const date = new Date(leave.createdAt);
+                            const hour = date.getHours();
+                            if (!hourlyStats[hour]) hourlyStats[hour] = { joins: 0, leaves: 0 };
+                            hourlyStats[hour].leaves += 1;
+                        });
+                    });
 
-                formatted = stats.map((item: any) => ({
-                    date: item.date,
-                    value: getMetricValue(item, metric),
-                }));
-            }
+                    formatted = Array.from({ length: 24 }, (_, i) => {
+                        const joins = hourlyStats[i]?.joins ?? 0;
+                        const leaves = hourlyStats[i]?.leaves ?? 0;
 
-            setDailyStats(formatted);
+                        let value = 0;
+
+                        switch (metric) {
+                            case 'subscriptions':
+                                value = joins;
+                                break;
+                            case 'unsubscriptions':
+                                value = leaves;
+                                break;
+                            case 'netTraffic':
+                                value = joins - leaves;
+                                break;
+                            case 'conversion':
+                                value = joins + leaves > 0 ? Math.round((joins / (joins + leaves)) * 100) : 0;
+                                break;
+                        }
+
+                        return {
+                            date: `${i} час`,
+                            value,
+                        };
+                    });
+
+                } else {
+                    const stats = res?.data?.stats?.dailyStats ?? [];
+
+                    formatted = stats.map((item: any) => ({
+                        date: item.date,
+                        value: getMetricValue(item, metric),
+                    }));
+                }
+
+                setDailyStats(formatted);
             } catch (e) {
                 setDailyStats([]);
             } finally {
@@ -161,7 +160,6 @@ const Chart = () => {
     const startX = useRef(0)
     const scrollStart = useRef(0)
 
-    const paddingY = 10;
     const paddingX = 40;
     const chartHeight = 350;
     const chartTopPadding = 5;
@@ -191,13 +189,12 @@ const Chart = () => {
     const yColumnWidth = maxYLength * 8 + 16;
 
     const chartPoints = useMemo(() => points.map((item, i) => {
-    const x = paddingX + (i * (width - paddingX * 2)) / (dataX.length - 1);
+        const x = paddingX + (i * (width - paddingX * 2)) / (dataX.length - 1);
 
-    // масштабируем относительно minY и maxY
-    const y = chartHeight - ((item - minY) / (maxY - minY)) * chartHeight;
+        const y = chartHeight - ((item - minY) / (maxY - minY)) * chartHeight;
 
-    return { x, y };
-}), [points, width, minY, maxY]);
+        return { x, y };
+    }), [points, width, minY, maxY]);
 
     const createBezierPath = (chartPoints: { x: number; y: number }[]) => {
         let d = `M ${chartPoints[0].x} ${chartPoints[0].y}`;
@@ -303,21 +300,19 @@ const Chart = () => {
             onMouseLeave={handleMouseUp}
         >
             <div className='relative col-start-1 row-start-1'>
-                <div className='relative col-start-1 row-start-1'>
-                    {dataY.map((value, index) => {
-    const y = chartTopPadding + paddingY + ((maxY - value) / (maxY - minY)) * chartHeight;
+                {dataY.map((value, index) => {
+                    const y = chartTopPadding + ((maxY - value) / (maxY - minY)) * chartHeight;
 
-    return (
-        <p
-            key={index}
-            className="absolute left-0 -translate-y-1/2 text-[#A3ABBC]"
-            style={{ top: y }}
-        >
-            {value}
-        </p>
-    );
-})}
-                </div>
+                    return (
+                        <p
+                            key={index}
+                            className="absolute left-0 -translate-y-1/2 text-[#A3ABBC]"
+                            style={{ top: y }}
+                        >
+                            {value}
+                        </p>
+                    );
+                })}
             </div>
             <div
                 ref={containerRef}
@@ -404,8 +399,8 @@ const Chart = () => {
                                         stroke="#E5E9F5"
                                     />
                                     <text x={tooltipX + 10} y={tooltipY + 22} fontSize={12} fill="#A3ABBC">
-    {period === 'day' ? hoverChart.date : formatRuDate(hoverChart.date)}
-</text>
+                                        {period === 'day' ? hoverChart.date : formatRuDate(hoverChart.date)}
+                                    </text>
                                     <text x={tooltipX + 10} y={tooltipY + 56} fontSize={24} fill="#282E3B">
                                         {valueText}
                                         <tspan dx={6} fontSize={10} fill="#A3ABBC">

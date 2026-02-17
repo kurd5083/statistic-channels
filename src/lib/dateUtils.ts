@@ -6,7 +6,7 @@ export const getDateFromFilter = (filter: string) => {
 
     switch (filter) {
         case "day":
-            from.setDate(now.getDate() - 1);
+            from.setDate(now.getDate());
             break;
         case "week":
             from.setDate(now.getDate() - 7);
@@ -25,36 +25,3 @@ export const getDateFromFilter = (filter: string) => {
 };
 
 export const getToday = () => formatDate(new Date());
-
-export const getLast24hRange = () => {
-    const now = new Date();
-    const from = new Date();
-    from.setHours(now.getHours() - 24);
-
-    return {
-        dateFrom: formatDate(from),
-        dateTo: formatDate(now),
-    };
-};
-
-export const getMonthRange = () => {
-    const now = new Date();
-    const from = new Date();
-    from.setMonth(now.getMonth() - 1);
-
-    return {
-        dateFrom: formatDate(from),
-        dateTo: formatDate(now),
-    };
-};
-
-export const getYearRange = () => {
-    const now = new Date();
-    const from = new Date();
-    from.setFullYear(now.getFullYear() - 1);
-
-    return {
-        dateFrom: formatDate(from),
-        dateTo: formatDate(now),
-    };
-};
