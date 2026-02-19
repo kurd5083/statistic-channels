@@ -1,73 +1,106 @@
-# React + TypeScript + Vite
+# ChannelStats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**ChannelStats** — платформа для мониторинга и анализа статистики Telegram-каналов.  
+Позволяет отслеживать подписки, отписки, чистый трафик и конверсию, анализировать
+активность аудитории по времени, фильтровать каналы и выгружать данные в Excel
+для дальнейшего анализа.
 
-Currently, two official plugins are available:
+🌐 **Демо:** https://channelstats.aiposting.live/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Мониторинг подписок и отписок
+- Расчёт чистого трафика и конверсии
+- Почасовая аналитика активности
+- Графики динамики роста каналов
+- Фильтрация и сравнение каналов
+- Выгрузка данных в Excel (XLSX)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Технологический стек
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React**
+- **TypeScript**
+- **Zustand**
+- **TanStack Query**
+- **TailwindCSS (Styled)**
+- **REST API**
+- **Vite**
+- **SheetJS (xlsx)**
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🧩 Архитектура и реализация
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### SPA на React + TypeScript
+Разработано одностраничное приложение с упором на производительность и стабильность:
+- React Hooks
+- оптимизированные ререндеры
+- строгая типизация данных
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Результат:**  
+- быстрый отклик интерфейса  
+- снижение количества runtime-ошибок  
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+### Управление состоянием и серверными данными
+- Zustand для локального и UI-состояния
+- TanStack Query для запросов, кеширования и синхронизации с сервером
+
+**Результат:**  
+- минимизация лишних запросов  
+- стабильная работа с большими объёмами данных  
+
+---
+
+### Аналитика и визуализация
+- Графики роста и активности каналов
+- Почасовая статистика
+- Агрегация данных по периодам
+
+**Результат:**  
+- наглядное понимание динамики аудитории  
+- удобный анализ эффективности каналов  
+
+---
+
+### Фильтрация и работа с каналами
+- Фильтрация по параметрам и периодам
+- Быстрое переключение между каналами
+- Подготовка данных для сравнения
+
+**Результат:**  
+- ускорение анализа  
+- удобство работы с большим количеством каналов  
+
+---
+
+### Экспорт данных в Excel
+- Интеграция **SheetJS (xlsx)**
+- Выгрузка отфильтрованных и агрегированных данных
+
+**Результат:**  
+- удобный офлайн-анализ  
+- использование данных в отчётах и презентациях  
+
+---
+
+### UI и адаптивность
+- TailwindCSS с кастомными стилями
+- Адаптивная верстка под desktop и mobile
+
+**Результат:**  
+- чистый и читаемый интерфейс  
+- комфортная работа на любых устройствах  
+
+---
+
+## 📈 Итог
+
+ChannelStats — это производительная и удобная аналитическая платформа для Telegram,
+ориентированная на точные метрики, визуальную аналитику и экспорт данных для
+принятия решений на основе статистики.
